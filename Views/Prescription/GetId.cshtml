@@ -1,0 +1,46 @@
+﻿
+
+@{
+    ViewBag.Title = "GetId";
+    Layout = "~/Views/PrescriptionLayout.cshtml";
+}
+
+<body>
+    @using (Html.BeginForm("Create", "Prescription"))
+    {
+        @Html.AntiForgeryToken()
+        <div class="card" style="width:400px; left:120px; opacity:0.9;">
+            <img class="card-img-top" src="~/img/blackwhitedoctor.png" alt="Card image">
+            <div class="card-body">
+                <h5 class="card-title">name</h5>
+                <p class="card-text">doctor id</p>
+                <p class="card-text">secialty</p>
+                <p class="card-text">doctor license</p>
+                <p class="card-text">doctor id</p>
+                <p class="card-text">doctor id</p>
+            </div>
+        </div>
+        <section class="row tm-contact-row" style="background-color:white; position:relative; left:575px; top:-690px; width:840px; opacity:0.8;">
+            <h1 class="font-weight-bold">Patient ID:</h1>
+            <table class="table ">
+                <tr>
+                    <th>
+                        <div class="col-10" style="left:650px;">
+                            <input type="number" name="Id" id="p_id" class="form-control text-dark" />
+                        </div>
+                    </th>
+                </tr>
+
+            </table>
+            <div style="left:700px; position:relative;">
+                <a class="navbar-brand"> @Html.ActionLink("Next", "Create", "Prescription", new { @Id = "GetId()" })</a>
+            </div>
+        </section>
+    }
+</body>
+<script>
+    function GetId() {
+        return document.getElementById("p_id").nodeValue;
+    }
+</script>
+

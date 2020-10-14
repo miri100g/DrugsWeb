@@ -1,0 +1,98 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en" class="parallax-window" data-parallax="scroll" style="opacity:0.8;"  data-image-src="/images/file-20170621-28012-10279t7.jpg">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Parallo -App Landing Page</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" />
+    <link rel="stylesheet" href="/css/all.min.css" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/templatemo-style.css" />
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row tm-brand-row">
+            <div class="col-lg-4 col-11">
+                <div class="tm-brand-container tm-bg-white-transparent" style="position:relative; height:122px; ">
+                    <i class="fas fa-2x fa-pen tm-brand-icon"></i>
+                    <div class="tm-brand-texts">
+                        <h1 class="text-uppercase tm-brand-name">Prescription</h1>
+                        <p class="small">
+                            because prevention is better than cure
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <meta name="viewport" content="width=device-width" />
+    <!-- LogIn -->
+    <section class="row" id="tmCallToAction">
+        <div class="col-lg-6">
+            <div class="tm-bg-white-transparent tm-feature-box row" style="position:relative; height:625px;">
+                <h1 class="tm-call-to-action-title text-sm-center">Log In</h1>
+                <h5 class="text-center">please enter your id:</h5>
+                <form action="#" method="get" class="form-group">
+                    <input name="id" id="Idp" type="text" class="form-control text-dark" style="position:relative; top:-30px;" />
+                    <div class="text-dark" style="position:relative; left:70px; top:20px;">
+                        @Html.ActionLink("LogIn", "Index", "Home", new { @class = "btn btn-secondary",@id="Get()"})
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="tm-bg-white-transparent tm-feature-box">
+                <h3 class="tm-feature-name">How to use our website?</h3>
+                <div class="tm-feature-icon-container">
+                    <img src="~/img/prescription.jpg" height="130" class="fas fa-3x fa-server" />
+                </div>
+                <p class="text-center">Once you have been logged into our system all you have to do is issue prescriptions. We will take care of the drug database and the patient database. You just need to make sure to issue the right medicine</p>
+            </div>
+        </div>
+
+
+        <div class="col-lg-6">
+            <div class="tm-bg-white-transparent tm-feature-box" style="position:relative; top:-625px; left:390px;">
+                <h3 class="tm-feature-name">Why use our website?</h3>
+
+                <div class="tm-feature-icon-container">
+                    <img src="~/img/why.jpg" height="140" class="fas fa-xbox fa-satellite-dish">
+                </div>
+                <p class="text-center">
+                    Prescribing medications as a way of treatment suffers from a number of potential failures that require reference.
+                    Our website helps issue prescriptions and perform tests to minimize those potential mistakes
+                </p>
+            </div>
+        </div>
+
+
+    </section>
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/parallax.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+</body>
+</html>
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}
+<script>
+    function Get() {
+        return document.getElementById("Idp").nodeValue;
+    }
+</script>

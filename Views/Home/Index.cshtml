@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/MainLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<body>
+
+
+
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/parallax.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="slick/slick.min.js"></script>
+    <script>
+        $(function () {
+            $('.tabgroup > div').hide();
+            $('.tabgroup > div:first-of-type').show();
+            $('.tabs a').click(function (e) {
+                e.preventDefault();
+                var $this = $(this),
+                    tabgroup = '#' + $this.parents('.tabs').data('tabgroup'),
+                    others = $this.closest('li').siblings().children('a'),
+                    target = $this.attr('href');
+                others.removeClass('active');
+                $this.addClass('active');
+                $(tabgroup).children('div').hide();
+                $(target).show();
+
+                // Scroll to tab content (for mobile)
+                if ($(window).width() < 992) {
+                    $('html, body').animate({
+                        scrollTop: $("#first-tab-group").offset().top
+                    }, 200);
+                }
+            })
+
+            $('.tm-carousel').slick({
+                dots: true,
+                infinite: false,
+                arrows: false,
+                speed: 300,
+                slidesToShow: 3,
+                slidesToScroll: 2,
+                responsive: [
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            arrows: false,
+                            slidesToShow: 2,
+                            slidesToScroll: 1,
+                            infinite: true,
+                            dots: true
+                        }
+                    },
+                    {
+                        breakpoint: 600,
+                        settings: {
+                            arrows: false,
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            arrows: false,
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+                    // You can unslick at a given breakpoint now by adding:
+                    // settings: "unslick"
+                    // instead of a settings object
+                ]
+            });
+        });
+    </script>
+</body>
+</html>
+}
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}

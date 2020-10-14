@@ -1,0 +1,126 @@
+﻿@model Gui_.Models.PatientPrescriptionViewModel
+
+@{
+    ViewBag.Title = "History";
+    Layout = "~/Views/PrescriptionLayout.cshtml";
+}
+
+<!--personal deatsils-->
+<section class="row tm-contact-row" style="background-color:white; position:relative; left:125px; top:50px; width:1290px; opacity:0.8;">
+    <h1 class="font-weight-bold">Personal Details</h1>
+    <button onclick="goBack()" style="position:relative; left:850px; top:-10px; background-color:azure; color:dodgerblue;">Go Back</button>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.patientList.IdP)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.patientList.FName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.patientList.LName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.patientList.gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.patientList.DateOfBirthd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.patientList.email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.patientList.PhonNumber)
+            </th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => Model.patientList.IdP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.patientList.FName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.patientList.LName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.patientList.gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.patientList.DateOfBirthd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.patientList.email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.patientList.PhonNumber)
+            </td>
+            <th></th>
+        </tr>
+    </table>
+</section>
+<!--end personal deatsils-->
+<!--prescriptions-->
+<section class="row tm-contact-row" style="background-color:white; position:relative; top:50px; left:125px; width:1290px; opacity:0.8;">
+    <h1 class="font-weight-bold">Medical History</h1>
+    <label style="position:relative; top:-40px; left:10px;  color:black;">Search by Ndc or by medicine name:</label>
+    <input type="text" id="myInput" onkeyup="myFunction()" style="position:relative; width:300px; top:-10px; right:230px;  color:black;">
+    <table class="table" id="myTable">
+        <tr>
+            <th>
+                <label>Medicine Name</label>
+            </th>
+            <th>
+                <label>From</label>
+            </th>
+            <th>
+                <label>Until</label>
+            </th>
+            <th>
+                <label>Notes</label>
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            @foreach (var item in Model.prescriptionList)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.medicineName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Start)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.End)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.notes)
+                </td>
+            }
+            <th></th>
+        </tr>
+
+    </table>
+</section>
+
+<!--end prescriptins-->
+
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}
+

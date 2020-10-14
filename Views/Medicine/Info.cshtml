@@ -1,0 +1,220 @@
+﻿@model IEnumerable<Gui_.Models.MedicineViewModel>
+
+@{
+    ViewBag.Title = "Info";
+    Layout = "~/Views/MainLayout.cshtml";
+}
+
+<!--sub tabs-->
+<section class="row" id="tmCallToAction">
+    <div class="col-lg-8 tm-call-to-action-col" style="position:relative; left:285px; top:-100px; ">
+        <div class="container-fluid">
+            <div class="row tm-brand-row">
+                <div class="col-lg-12 col-11 tm-contact-col">
+                    <div class="tm-nav">
+                        <nav class="navbar navbar-expand-lg navbar-light tm-bg-white-transparent tm-navbar">
+                            <div class="collapse navbar-collapse" id="navbarNav">
+                                <ul class="navbar-nav">
+                                    <li class="nav-item">
+                                        <a class="navbar-brand"> @Html.ActionLink("Add", "Create", "Medicine")</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="navbar-brand">@Html.ActionLink("Edit/Delete", "Index", "Medicine")</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="navbar-brand">@Html.ActionLink("Whatch Full List", "Details", "Medicine")</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="navbar-brand">@Html.ActionLink("Information", "Info", "Medicine")</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end sub tabs-->
+
+<!doctype html>
+<html>
+<head>
+    <script src="~/Scripts/Chart.min.js"></script>
+    <script src="~/Scripts/utils.js"></script>
+    <style>
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+    </style>
+    <meta name="NetsparkQuiltingResult" total-length="4215" removed="0" rules-found="w2339,w2713,w3914,w3082,w5163" />
+</head>
+<body>
+
+    <div class="col-lg-12  tm-home-container" style="position:relative; right:150px;  top:-170px; opacity:0.9;">
+        <div class="tm-bg-white" style="position:relative; width:500px; right:300px;">
+            <div class="text-dark" style="color:black;">
+                <p class="text-uppercase tm-slogan">Medicine Consumption Data</p>
+                <hr class="tm-home-hr text-dark" />
+                <p class="tm-home-text">
+                    You can see how many times a specific medicine has been prescribed in a given period.
+                </p>
+                <div class="form-group center-block">
+                    <select id="med_activeIngredentce" class="form-control  tm-navbar" required="" style="color:black; width:400px; border-color:black;">
+                        <option value="1">one</option>
+                        <option value="2">two</option>
+                        <option value="3">three</option>
+                        <option value="4">four</option>
+                    </select>
+                    <div class="btn-group-vertical" style="position:relative; left:240px; top:40px;">
+                        <button id="randomizeData" class="btn btn-outline-dark btn-block">Check</button>
+                        <button id="addData" class="btn btn-outline-dark btn-block">Add Period</button>
+                        <button id="addDataset" class="btn btn-outline-dark btn-block">Add Medicine</button>
+                        <button id="removeDataset" class="btn btn-outline-dark btn-block">Remove Medicine</button>
+                        <button id="removeData" class="btn btn-outline-dark btn-block">Remove Period</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="width:50%; left:600px; height:400px; top:-580px; position:relative; background-color:white; opacity:0.9;">
+        <canvas id="canvas"></canvas>
+    </div>
+    <script>
+        var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        var randomScalingFactor = function () {
+            return Math.round(Math.random() * 100);
+        };
+        var config = {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                datasets: [{
+                    label: 'Medicine 1',
+                    backgroundColor: window.chartColors.red,
+                    borderColor: window.chartColors.red,
+                    data: [
+                        1, 1, 1, 1, 1, 1, 1  //number of prescriptions data
+                    ],
+                    fill: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Chart.js Line Chart'
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Month'
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Value'
+                        },
+                        ticks: {
+                            min: 0,
+                            max: 100,
+
+                            // forces step size to be 5 units
+                            stepSize: 5
+                        }
+                    }]
+                }
+            }
+        };
+
+        window.onload = function () {
+            var ctx = document.getElementById('canvas').getContext('2d');
+            window.myLine = new Chart(ctx, config);
+        };
+
+        document.getElementById('randomizeData').addEventListener('click', function () {
+            config.data.datasets.forEach(function (dataset) {
+                dataset.data = dataset.data.map(function () {
+                    return randomScalingFactor();
+                });
+            });
+
+            window.myLine.update();
+        });
+
+        var colorNames = Object.keys(window.chartColors);
+        document.getElementById('addDataset').addEventListener('click', function () {
+            var colorName = colorNames[config.data.datasets.length % colorNames.length];
+            var newColor = window.chartColors[colorName];
+            var newDataset = {
+                label: 'Dataset ' + config.data.datasets.length,
+                backgroundColor: newColor,
+                borderColor: newColor,
+                data: [],
+                fill: false
+            };
+
+            for (var index = 0; index < config.data.labels.length; ++index) {
+                newDataset.data.push(randomScalingFactor());
+            }
+
+            config.data.datasets.push(newDataset);
+            window.myLine.update();
+        });
+
+        document.getElementById('addData').addEventListener('click', function () {
+            if (config.data.datasets.length > 0) {
+                var month = MONTHS[config.data.labels.length % MONTHS.length];
+                config.data.labels.push(month);
+
+                config.data.datasets.forEach(function (dataset) {
+                    dataset.data.push(randomScalingFactor());
+                });
+
+                window.myLine.update();
+            }
+        });
+
+        document.getElementById('removeDataset').addEventListener('click', function () {
+            config.data.datasets.splice(0, 1);
+            window.myLine.update();
+        });
+
+        document.getElementById('removeData').addEventListener('click', function () {
+            config.data.labels.splice(-1, 1); // remove the label first
+
+            config.data.datasets.forEach(function (dataset) {
+                dataset.data.pop();
+            });
+
+            window.myLine.update();
+        });
+
+    </script>
+</body>
+
+</html>
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}

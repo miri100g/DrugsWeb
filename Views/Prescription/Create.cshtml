@@ -1,0 +1,151 @@
+﻿@model Gui_.Models.PrescriptionViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/PrescriptionLayout.cshtml";
+}
+
+
+<body>
+    @using (Html.BeginForm("History", "Prescription"))
+    {
+        @Html.AntiForgeryToken()
+
+        <section class="col-9  tm-contact-col-left tm-bg-white-transparent" style="position:relative; left:550px; top:10px; width:850px;">
+            <form action="#" method="POST" id="tmContactForm">
+                <div style="color:black; width:800px; left:50px; position:relative; text-emphasis-color:black;">
+                    <br />
+                    <h5 id="">@DateTime.Now</h5>
+                    <br /><br />
+                    <h1>Prescription</h1>
+                    <br /><br />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.patientId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <input type="number" id="p_id" name="Id" class="form-control text-dark" />
+                            </div>
+                            <div class="form-group">
+                                <lable style="position:relative; top:-40px;">Patient's First Name</lable>
+                                <input type="text" id="patient_fname" name="patient_fna" class="form-group text-dark" readonly required="" style="position:relative; width:225px; top:-10px; right:175px; color:black;" />
+                            </div>
+                            <div class="form-group">
+                                <lable style="position:relative; top:-110px;">Patient's Last Name</lable>
+                                <input type="text" id="patient_lname" name="patient_lname" class="form-group text-dark" readonly required="" style="position:relative; color:black; top:-80px; right:175px; width:225px;" />
+                            </div>
+                            <div class="form-group" style="position:relative; top:-160px; left:30px;">
+                                <div class="form-group">
+                                    <a class="navbar-brand"> @Html.ActionLink("Medical History", "History", "Prescription", new { @Id = "GetId()" })</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="position:relative; left:420px; top:-457px;">
+                        @Html.LabelFor(model => model.doctorId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                @Html.DropDownListForDctors("doctorId")
+                                @Html.ValidationMessageFor(model => model.doctorId, "", new { @class = "form-group text-dark" })
+                            </div>
+                            <div class="form-group">
+                                <lable style="position:relative; top:-40px;">Doctor's First Name</lable>
+                                <input type="text" id="doc_fname" name="doc_fna" class="form-group" readonly required="" style="position:relative; width:220px; top:-10px; right:173px; color:black;" />
+                            </div>
+                            <div class="form-group">
+                                <lable style="position:relative; top:-110px;">Doctor's Last Name</lable>
+                                <input type="text" id="doc_lname" name="doc_lname" class=" form-group text-dark" readonly required="" style="position:relative; color:black; top:-80px; right:173px; width:220px;" />
+                            </div>
+                        </div>
+
+                        <select id="cars" name="cars" onclick="sendName(item.getElementById)">
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="fiat">Fiat</option>
+                            <option value="audi">Audi</option>
+                        </select>
+
+                    </div>
+                  
+                    <div style="position:relative; top:-520px;">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.medicineName, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-10 " style="color:black">
+
+                                @Html.DropDownListForUsers("medicineName")
+
+
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Start, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="form-group">
+                                <input type="date" id="pre_start" name="Start" style="position:relative; width:315px;" class="form-control text-dark" placeholder="start" />
+
+                                <div class="form-group">
+                                    <label style="position:relative; color:black; top:-85px; left:345px; ">Until:</label>
+                                    <input type="date" id="pre_end" name="End" style="position:relative; width:315px; left:345px; top:-87px;" class="form-control text-dark" placeholder="end" />
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="position:relative;top:-20px;">
+                                @Html.LabelFor(model => model.notes, htmlAttributes: new { @class = "control-label col-md-6" })
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <textarea rows="10" id="med_prop" name="notes" class="form-control text-dark" required=""></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <br /><br /><br />
+
+
+                            <div class="form-group">
+                                <div div class="form-group" style="position:relative; left:220px;">
+                                    <input type="submit" value="Issue Prescription" class="btn btn-default" />
+                                </div>
+                            </div>
+
+
+                            <script>
+
+                            </script>
+
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+
+        </section>
+    }
+</body>
+
+
+<script>
+    var dt = new Date();
+    document.getElementById("datetime").innerHTML = (("0" + dt.getDate()).slice(-2)) + "." + (("0" + (dt.getMonth() + 1)).slice(-2))
+        + "." + (dt.getFullYear());
+</script>
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}
+<script type="text/javascript">
+
+    function changeLabel(src)
+    {
+        src = src.substring(src.lastIndexOf('\\') + 1, src.lenth);
+        document.getElementById('fileLabel').innerHTML = src;
+    }
+</script>
+<script>
+    function GetId() {
+        return document.getElementById("p_id").nodeValue;
+    }
+</script>
